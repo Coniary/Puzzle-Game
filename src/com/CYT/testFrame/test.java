@@ -7,6 +7,6 @@ import com.CYT.mainFrame.dialog.WinnerJFrame;
 public class test {
     static WinnerJFrame wj = WinnerJFrame.getInstance();
     public static void main(String[] args) {
-        new GameJFrame();
+        new GameJFrame();   //测试部分
     }
 }
