@@ -4,7 +4,7 @@
 ## 项目结构
 <div style="text-align: center;">这张图是此项目的窗体结构图</div>
 
-![窗口结构图](WindowStruct.png "窗口结构")
+![窗口结构图]([WindowStruct.png](https://github.com/Coniary/Puzzle-Game/blob/master/%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E6%96%87%E6%A1%A3/WindowStruct.png) "窗口结构")
 ### *窗口组成子类*
 | 类名            | 功能         | 组别      |
 |---------------|------------|---------|
