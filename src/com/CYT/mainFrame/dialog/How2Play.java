@@ -5,14 +5,21 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class AuthorInfo extends JFrame implements MouseListener {
+public class How2Play extends JFrame implements MouseListener {
+    /* 单例 */
 
     JLabel jLabel;
     JButton jButton;
-    private static final AuthorInfo instance = new AuthorInfo();
-    private AuthorInfo() throws HeadlessException {
+    private static final How2Play instance = new How2Play();
+    public static How2Play getInstance() {
+        return instance;
+    }
+    public void showWindow() {
+        this.setVisible(true);
+    }
+    private How2Play() throws HeadlessException {
         this.setSize(503, 210);
-        this.setTitle("关于作者");
+        this.setTitle("操作说明");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setAlwaysOnTop(true);
@@ -21,8 +28,9 @@ public class AuthorInfo extends JFrame implements MouseListener {
 
         init();
     }
+
     private void init() {
-        jLabel = new JLabel( "<html>" + "这是由Coniary撰写的拼图小游戏,如果喜欢可以在Github中给作者点Star。" + "</html>");
+        jLabel = new JLabel( "<html>" + "↑ ↓ ← →来向中心移动滑块,按下 A 键可以短暂预览图片" + "</html>");
         jLabel.setBounds(20, 0, 300, 200);
         jLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
         this.add(jLabel);
@@ -33,12 +41,6 @@ public class AuthorInfo extends JFrame implements MouseListener {
         this.add(jButton);
     }
 
-    public static AuthorInfo getInstance() {
-        return instance;
-    }
-    public void showWindow() {
-        this.setVisible(true);
-    }
     @Override
     public void mouseClicked(MouseEvent e) {
     }

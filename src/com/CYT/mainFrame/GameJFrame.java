@@ -1,5 +1,7 @@
 package com.CYT.mainFrame;
 
+import com.CYT.mainFrame.dialog.AuthorInfo;
+import com.CYT.mainFrame.dialog.How2Play;
 import com.CYT.mainFrame.dialog.WinnerJFrame;
 
 import javax.swing.*;
@@ -21,17 +23,18 @@ public class GameJFrame extends JFrame implements ActionListener, KeyListener {
     int x, y;
     int steps = 0;
     JMenuBar jmb;
-    JMenu jm1, jm2;
-    JMenuItem jm1_1, jm1_2, jm1_3, jm1_4; JMenuItem jm1_1_1;
-    JMenuItem jm2_1;
+    JMenu jm1, jm2, jm1_1;
+    JMenuItem jm1_2, jm1_3, jm1_4; JMenuItem jm1_1_1;
+    JMenuItem jm2_1, jm2_2;
 
-    WinnerJFrame wj = WinnerJFrame.getInstance();
+    static WinnerJFrame wj = WinnerJFrame.getInstance();
+    static AuthorInfo ai = AuthorInfo.getInstance();
+    static How2Play hp = How2Play.getInstance();
 
     public GameJFrame() throws HeadlessException {
         this.setSize(603, 680);
         this.setTitle("Puzzle_Game Version 1.0");
-        //设置窗体永远在最上方
-        this.setAlwaysOnTop(true);
+
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -92,28 +95,35 @@ public class GameJFrame extends JFrame implements ActionListener, KeyListener {
 
         jm1 = new JMenu("功能");
         // 1#
-        jm1_1 = new JMenuItem("更换图片");
+        jm1_1 = new JMenu("更换图片");
+        jm1_1_1 = new JMenuItem("天空");
         jm1_2 = new JMenuItem("重新游戏");
         jm1_3 = new JMenuItem("重新登录");
         jm1_4 = new JMenuItem("关闭游戏");
         // 1##
 
         jm1.add(jm1_1);
+            jm1_1.add(jm1_1_1);
         jm1.add(jm1_2);
         jm1.add(jm1_3);
         jm1.add(jm1_4);
 
-        jm2 = new JMenu("关于我们");
+        jm2 = new JMenu("关于");
         // 2#
         jm2_1 = new JMenuItem("作者信息");
+        jm2_2 = new JMenuItem("操作说明");
 
         jm2.add(jm2_1);
+        jm2.add(jm2_2);
 
         //添加组件监听
         jm1_1.addActionListener(this);
         jm1_2.addActionListener(this);
         jm1_3.addActionListener(this);
         jm1_4.addActionListener(this);
+        jm2_1.addActionListener(this);
+        jm2_2.addActionListener(this);
+        jm1_1_1.addActionListener(this);
         //组件封装
         jmb.add(jm1);
         jmb.add(jm2);
@@ -165,13 +175,23 @@ public class GameJFrame extends JFrame implements ActionListener, KeyListener {
 
         } else if (source == jm1_2) {
             System.out.println("要求重新游戏");
-
+            steps = 0;
+            initData();
+            initImage();
         } else if (source == jm1_3) {
             System.out.println("要求重新登录");
 
         } else if (source == jm1_4) {
             System.out.println("要求退出游戏");
             exit(0);
+        } else if (source == jm2_1) {
+            System.out.println("要求显示作者信息");
+            ai.showWindow();
+        } else if (source == jm2_2) {
+            System.out.println("要求显示操作方法");
+            hp.showWindow();
+        } else if (source == jm1_1_1) {
+            System.out.println("要求使用天空背景");
         }
     }
 
@@ -228,6 +248,10 @@ public class GameJFrame extends JFrame implements ActionListener, KeyListener {
             // 弹窗宣布胜利
             System.out.println("玩家已完成拼图");
             wj.showWindow(steps);
+        }
+        // 判断 A键 是否激活
+        if (e.getKeyCode() == 65) {
+
         }
     }
 }
