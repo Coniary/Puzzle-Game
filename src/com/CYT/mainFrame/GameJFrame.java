@@ -26,6 +26,7 @@ public class GameJFrame extends JFrame implements ActionListener, KeyListener {
     JMenu jm1, jm2, jm1_1;
     JMenuItem jm1_2, jm1_3, jm1_4; JMenuItem jm1_1_1;
     JMenuItem jm2_1, jm2_2;
+    private boolean isShow = false;
 
     static WinnerJFrame wj = WinnerJFrame.getInstance();
     static AuthorInfo ai = AuthorInfo.getInstance();
@@ -140,10 +141,7 @@ public class GameJFrame extends JFrame implements ActionListener, KeyListener {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                JLabel jLabel = new JLabel(new ImageIcon("images/Landscape/Sky/Sky_"+ String.format("%02d", data[i][j]) +".jpg"));
-                jLabel.setBounds(105 * j + 83, 105 * i + 134, 105, 105);
-                if (data[i][j] != 0) jLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-                else jLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+                JLabel jLabel = getjLabel(i, j);
                 this.add(jLabel);
             }
         }
@@ -154,17 +152,44 @@ public class GameJFrame extends JFrame implements ActionListener, KeyListener {
 
         this.getContentPane().repaint();
     }
+
+    private JLabel getjLabel(int i, int j) {
+        String path;
+        if (isShow) {
+            path = "images/Landscape/Sky/Sky_"+ String.format("%02d", 4 * i + j + 1) +".jpg";
+        } else {
+            path = "images/Landscape/Sky/Sky_"+ String.format("%02d", data[i][j]) +".jpg";
+        }
+        JLabel jLabel = new JLabel(new ImageIcon(path));
+        jLabel.setBounds(105 * j + 83, 105 * i + 134, 105, 105);
+        if (data[i][j] != 0) jLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
+        else jLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        return jLabel;
+    }
+
     private boolean isWin() {
         boolean tag = true;
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 2; j++) {
-                if (data[i][j] - data[i][j+1] != 1) {
+            for (int j = 0; j < 3; j++) {
+                if (data[i][j+1] - data[i][j] != 1) {
                     tag = false;
                     break;
                 }
             }
         }
+        for (int i = 0; i < 2; i++) {
+            if (data[3][i+1] - data[3][i] != 1) {
+                tag = false;
+                break;
+            }
+        }
         return tag;
+    }
+    private void cheat() {
+        data = new int[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 0}};
+        initImage();
+        x = 3;
+        y = 3;
     }
 
     @Override
@@ -238,6 +263,9 @@ public class GameJFrame extends JFrame implements ActionListener, KeyListener {
                 ++y;
                 initImage();
             }
+        } else if (code == 65) {
+            isShow = true;
+            initImage();
         }
     }
 
@@ -249,9 +277,18 @@ public class GameJFrame extends JFrame implements ActionListener, KeyListener {
             System.out.println("玩家已完成拼图");
             wj.showWindow(steps);
         }
-        // 判断 A键 是否激活
+        // 判断 A键 是否释放
         if (e.getKeyCode() == 65) {
-
+            isShow = false;
+            initImage();
+        }
+        // 判断 C键 是否被释放
+        if (e.getKeyCode() == 67) {
+            cheat();
         }
     }
+
+
+
+
 }
